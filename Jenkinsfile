@@ -31,7 +31,7 @@ pipeline{
         }
         stage('run the container'){
             steps{
-                sh 'docker run -d --name cont1 -p 8180:8080 netflix2'
+                sh 'docker run -d --name cont2 -p 8280:8080 netflix2'
             }
         }
     }
