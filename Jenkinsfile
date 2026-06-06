@@ -1,51 +1,39 @@
 pipeline{
     agent any
-
     tools{
         maven 'maven'
     }
-
     stages{
-
-        stage('Code'){
+        stage('code'){
             steps{
                 git 'https://github.com/Ritesh-Prasad/java-project.git'
             }
         }
-
         stage('Build'){
             steps{
                 sh 'mvn compile'
             }
         }
-
         stage('Test'){
             steps{
                 sh 'mvn test'
             }
         }
-
         stage('Artifacts'){
             steps{
                 sh 'mvn package'
             }
         }
-
-        stage('Build Docker Image'){
+        stage('build image'){
             steps{
-                sh '''
-                docker rmi netflix2 || true
-                docker build --no-cache -t netflix2 .
-                '''
+                sh 'docker build -t netflix2 .'
             }
         }
-
-        stage('Run Container'){
+        stage('run the container'){
             steps{
                 sh '''
                 docker stop cont2 || true
                 docker rm -f cont2 || true
-
                 docker run -d --name cont2 -p 8280:8080 netflix2
                 '''
             }
