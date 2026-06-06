@@ -32,6 +32,7 @@ pipeline{
         stage('run the container'){
             steps{
                 sh '''
+                docker stop cont2 || true
                 docker rm -f cont2 || true
                 docker run -d --name cont2 -p 8280:8080 netflix2
                 '''
