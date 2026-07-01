@@ -24,7 +24,7 @@ pipeline{
                 sh 'mvn package'
             }
         }
-        stage('build image'){
+        stage('tomcat'){
             steps{
                 deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'tomcat', path: '', url: 'http://52.66.180.98:8080/')], contextPath: 'netflix', war: 'target/*'
             }
