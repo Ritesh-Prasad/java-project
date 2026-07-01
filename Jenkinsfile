@@ -24,18 +24,9 @@ pipeline{
                 sh 'mvn package'
             }
         }
-        stage('build image'){
+        stage('tomcat'){
             steps{
-                sh 'docker build -t netflix2 .'
-            }
-        }
-        stage('run the container'){
-            steps{
-                sh '''
-                docker stop cont2 || true
-                docker rm -f cont2 || true
-                docker run -d --name cont2 -p 8280:8080 netflix2
-                '''
+                deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'tomcat', path: '', url: 'http://52.66.180.98:8080/')], contextPath: 'netflix', war: 'target/*'
             }
         }
     }
